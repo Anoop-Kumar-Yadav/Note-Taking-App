@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1003</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>19</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Login</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.0681818, x2:0, y2:1, stop:0 rgba(43, 171, 218, 255), stop:0.711443 rgba(235, 103, 255, 255), stop:1 rgba(255, 255, 255, 255));</string>
+  </property>
+  <widget class="QPushButton" name="loginButton">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>400</y>
+     <width>201</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>20</pointsize>
+     <weight>9</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+                border: 2px solid white;
+                border-radius: 4px;
+                padding: 5px;
+                font-size: 16px;
+	font: 75 20pt &quot;MS Shell Dlg 2&quot;;
+                background: transparent;
+            }
+            QPushButton:hover {
+                border: 2px solid rgba(43, 171, 218, 255);
+				color:rgba(43, 171, 218, 255);
+                background-color: rgba(255, 255, 255, 255);
+            }
+            QPushButton:pressed {
+                border: 2px solid darkblue;
+                background-color: gray;
+            }</string>
+   </property>
+   <property name="text">
+    <string>Log In</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>991</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background: transparent; color: white; font-size: 80px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="margin">
+    <number>10</number>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::NoTextInteraction</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>490</y>
+     <width>991</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background: transparent; color: white; font-size: 20px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>© 2024 CodeHUB. All rights reserved.</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="margin">
+    <number>10</number>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::NoTextInteraction</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="emailText">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>170</y>
+     <width>481</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 16pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(48, 169, 219);</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>   Enter User Email </string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="passText">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>260</y>
+     <width>481</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 16pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(48, 169, 219);</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>   Enter Password</string>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="forgetButton">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>330</y>
+     <width>191</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton {
+background-color: transparent;
+font: 10pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(255, 255, 255);
+            }
+            QPushButton:hover {
+           color: rgb(0, 255, 127);
+            }</string>
+   </property>
+   <property name="text">
+    <string>Forget Password ?</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>-20</x>
+     <y>-10</y>
+     <width>201</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>MS Shell Dlg 2</family>
+     <pointsize>20</pointsize>
+     <weight>9</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+				border: 2px solid rgba(43, 171, 218, 255);
+				color:rgba(43, 171, 218, 255);
+                background-color: rgba(255, 255, 255, 255);
+                border-radius: 10px;
+                padding: 5px;
+                font-size: 16px;
+				font: 75 20pt &quot;MS Shell Dlg 2&quot;;
+            }
+            QPushButton:hover {
+                border: 2px solid rgba(43, 171, 218, 255);
+				color:rgb(232, 104, 254);
+                background-color: rgba(255, 255, 255, 255);
+            }
+            QPushButton:pressed {
+                border: 2px solid darkblue;
+                background-color: gray;
+            }</string>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passErrorLabel">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>370</y>
+     <width>481</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background:transparent;
+color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
