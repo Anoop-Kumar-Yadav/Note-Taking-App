@@ -1,0 +1,2 @@
+PyQt5==5.15.7
+sqlite3  # Usually comes pre-installed with Python
