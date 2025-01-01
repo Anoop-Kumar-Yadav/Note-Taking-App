@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 class DatabaseManager:
     def __init__(self):
@@ -10,8 +11,48 @@ class DatabaseManager:
         self.create_tables()
 
 # --------------------------------------------------------------------------------------------------------------------------------
+    def run_once_function(self):
+        json_file_path = "./resources/current_user.json"
+
+        data = {"currentUser": 0}
+
+        try:
+            with open(json_file_path, "w") as json_file:
+                json.dump(data, json_file, indent=4)
+            print(f"JSON file '{json_file_path}' created successfully with data: {data}")
+        except Exception as e:
+            print(f"Error creating JSON file: {e}")
+
+# --------------------------------------------------------------------------------------------------------------------------------
+    def initialize_settings_table(self):
+
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+        """)
+
+        self.cursor.execute("SELECT value FROM settings WHERE key = 'init_flag'")
+        result = self.cursor.fetchone()
+
+        if result is None:
+            self.run_once_function()
+            self.cursor.execute("INSERT INTO settings (key, value) VALUES ('init_flag', '1')")
+            self.conn.commit()
+
+        elif result[0] == '0':
+            self.run_once_function()
+            self.cursor.execute("UPDATE settings SET value = '1' WHERE key = 'init_flag'")
+            self.conn.commit()
+
+        else:
+            print("Initialization already completed.")
+
+# --------------------------------------------------------------------------------------------------------------------------------
 
     def create_tables(self):
+        self.initialize_settings_table()
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,

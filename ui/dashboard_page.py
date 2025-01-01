@@ -34,6 +34,7 @@ class Ui_Form(object):
             }
         """)
 
+
         self.tabWidget = QtWidgets.QTabWidget(Form)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1181, 741))
         font = QtGui.QFont()
