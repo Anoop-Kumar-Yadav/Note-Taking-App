@@ -1,5 +1,8 @@
 import sys,re
+import json
 from PyQt5.QtWidgets import QApplication, QMainWindow,QMessageBox,QDialog, QTableWidgetItem, QPushButton,QWidget, QHBoxLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 import ui.dashboard_page
 import ui.home_page
 import ui.login_page
@@ -20,12 +23,13 @@ class MainApp:
 
         self.db_manager = ui.db_manager.DatabaseManager()
 
-        self.currentUser = None
+        self.currentUser = self.load_current_user()
 
         self.home_page = QMainWindow()
         self.login_page = QMainWindow()
         self.register_page = QMainWindow()
         self.dashboard_page = QMainWindow()
+        self.dashboard_page.closeEvent = self.closeEvent
 
         self.home_ui = ui.home_page.Ui_Form()
         self.home_ui.setupUi(self.home_page)
@@ -45,7 +49,7 @@ class MainApp:
 
         self.register_ui.backButton.clicked.connect(self.open_home_window)
         self.register_ui.loginButton.clicked.connect(self.open_login_window)
-        self.register_ui.fignupButton.clicked.connect(self.handle_register)
+        self.register_ui.signupButton.clicked.connect(self.handle_register)
 
         self.login_ui.backButton.clicked.connect(self.open_home_window)
         self.login_ui.loginButton.clicked.connect(self.open_dashboard_window)
@@ -53,22 +57,105 @@ class MainApp:
         self.dashboard_ui.loginButton.clicked.connect(self.open_add_note_window)
 
         self.dashboard_ui.loginButton_3.clicked.connect(self.logout)
+        self.init_startup_window()
+
+# --------------------------------------------------------------------------------------------------------------------------------
+    def load_current_user(self):
+        try:
+            with open("resources//current_user.json", "r") as file:
+                data = json.load(file)
+                return data.get("currentUser", None)
+        except FileNotFoundError:
+            return None
+        
+    def save_current_user(self):
+        with open("resources//current_user.json", "w") as file:
+            json.dump({"currentUser": self.currentUser}, file)
+
+    def init_startup_window(self):
+        if self.currentUser != 0:
+            self.init_dashboard()
+            self.dashboard_page.show()
+        else:
+            self.home_page.show()
+
+    def logout(self):
+        self.currentUser = 0
+        self.save_current_user()
+        self.dashboard_page.close()
+        self.open_home_window()
+
+    def closeEvent(self, event):
+        if self.show_error_dialog("Do you want to exit ?") :
+            self.save_current_user()
+            event.accept()
+        else:
+            event.ignore() 
 
 # --------------------------------------------------------------------------------------------------------------------------------
     def add_buttons_to_row(self, row, note_id):
-        update_button = QPushButton("Update")
-        delete_button = QPushButton("Delete")
+        # Create buttons
+        update_button = QPushButton()        
+        delete_button = QPushButton()
+
+        update_icon = QIcon('resources\\edit.png') 
+        delete_icon = QIcon('resources\\delete.png') 
+        update_button.setIcon(update_icon)
+        delete_button.setIcon(delete_icon)
+
+        update_button.setStyleSheet("""
+            QPushButton {
+                background-color: white;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-family: 'Segoe UI';
+                font-size: 10px;
+                font-weight: 500;
+            }
+            QPushButton:hover {
+                background-color: #218838;
+            }
+            QPushButton:pressed {
+                background-color: #1e7e34;
+            }
+        """)
+
+        delete_button.setStyleSheet("""
+            QPushButton {
+                background-color: white;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-family: 'Segoe UI';
+                font-size: 13px;
+                font-weight: 500;
+            }
+            QPushButton:hover {
+                background-color: #c82333;
+            }
+            QPushButton:pressed {
+                background-color: #bd2130;
+            }
+        """)
 
 
         update_button.clicked.connect(lambda _, note_id=note_id: self.update_note_action(note_id))
         delete_button.clicked.connect(lambda _, note_id=note_id: self.delete_note_action(note_id))
 
+
         action_widget = QWidget()
         action_layout = QHBoxLayout(action_widget)
         action_layout.addWidget(update_button)
+        action_layout.addSpacing(8)  
         action_layout.addWidget(delete_button)
-        action_layout.setContentsMargins(0, 0, 0, 0) 
+        action_layout.setContentsMargins(5, 2, 5, 2) 
+        action_layout.setAlignment(Qt.AlignCenter) 
+
         action_widget.setLayout(action_layout)
+
 
         self.dashboard_ui.tableWidget.setCellWidget(row, 5, action_widget)
 
@@ -86,10 +173,9 @@ class MainApp:
 # --------------------------------------------------------------------------------------------------------------------------------
 
     def delete_note_action(self, note_id):
-        print(f"Delete clicked for note ID: {note_id}")
-        # Delete the note from the database
+      
         self.db_manager.delete_note(note_id)
-        # Refresh the table after deletion
+
         self.populate_notes_table(str(self.db_manager.get_user_id_by_gmail(self.currentUser)))
         user_id = str(self.db_manager.get_user_id_by_gmail(self.currentUser))
         self.dashboard_ui.label_3.setText(str( self.db_manager.get_note_count(user_id)))
@@ -127,7 +213,7 @@ class MainApp:
       
             self.add_buttons_to_row(row, note[0])
 
-        # self.dashboard_ui.tableWidget.resizeColumnsToContents()
+    
         self.dashboard_ui.tableWidget.horizontalHeader().setStretchLastSection(True)
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -190,9 +276,9 @@ class MainApp:
         result = dialog.exec_()
 
         if result == QDialog.Accepted:
-            print("Error Dialog OK Button Clicked")
+            return 1
         else:
-            print("Error Dialog Cancel Button Clicked")
+            return 0
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
@@ -228,15 +314,18 @@ class MainApp:
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
+    def update_profile(self,user):
+        self.dashboard_ui.label_24.setText(str(user['user_id']))
+        self.dashboard_ui.label_8.setText(str(user['full_name']))
+        self.dashboard_ui.label_9.setText( str(user['gmail']))
+               
     def init_dashboard(self):
         user = self.db_manager.get_user_profile_by_email(self.currentUser)
         self.dashboard_ui.infolabel.setText("Welcome " + user['full_name'])
         self.dashboard_ui.label_3.setText(str( self.db_manager.get_note_count(user["user_id"])))
-        
-        self.dashboard_ui.label_24.setText(str(user['user_id']))
-        self.dashboard_ui.label_8.setText(str(user['full_name']))
-        self.dashboard_ui.label_9.setText( str(user['gmail']))
 
+        self.update_profile(user)
+        
         self.populate_notes_table(user["user_id"])
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -311,15 +400,8 @@ class MainApp:
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
-    def logout(self):
-        self.dashboard_page.close()
-        self.login_page.close()
-        self.open_home_window()
-
-# --------------------------------------------------------------------------------------------------------------------------------
-
     def run(self):
-        self.home_page.show()
+        self.init_startup_window()
         sys.exit(self.app.exec_())
 
 # --------------------------------------------------------------------------------------------------------------------------------

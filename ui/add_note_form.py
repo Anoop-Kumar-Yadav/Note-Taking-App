@@ -33,12 +33,12 @@ class Ui_Form(object):
         self.label_2.setGeometry(QtCore.QRect(-70, -20, 991, 121))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
-        font.setPointSize(20)
+        font.setPointSize(28)
         font.setBold(True)
         font.setItalic(False)
         font.setWeight(75)
         self.label_2.setFont(font)
-        self.label_2.setStyleSheet("background-color: rgb(173, 127, 243);\n"
+        self.label_2.setStyleSheet("background-color: rgb(74, 111, 255);\n"
 "color: rgb(255, 255, 255);\n"
 "")
         self.label_2.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -100,44 +100,19 @@ class Ui_Form(object):
 "                background-color: gray;\n"
 "            }")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../resources/add_notes.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./resources/add_notes.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.loginButton.setIcon(icon)
         self.loginButton.setIconSize(QtCore.QSize(48, 48))
         self.loginButton.setObjectName("loginButton")
-        self.loginButton_2 = QtWidgets.QPushButton(self.frame)
-        self.loginButton_2.setGeometry(QtCore.QRect(30, 660, 241, 71))
+        
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(20)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(9)
-        self.loginButton_2.setFont(font)
-        self.loginButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.loginButton_2.setStyleSheet("QPushButton {\n"
-"    color: rgb(170, 170, 255);\n"
-"                border: 2px solid rgb(170, 170, 255);\n"
-"                border-radius: 4px;\n"
-"                padding: 5px;\n"
-"                font-size: 16px;\n"
-"                font: 75 20pt \"MS Shell Dlg 2\";\n"
-"                background: transparent;\n"
-"            }\n"
-"            QPushButton:hover {\n"
-"                border: 2px solid rgba(43, 171, 218, 255);\n"
-"                color:rgba(43, 171, 218, 255);\n"
-"                background-color: rgba(255, 255, 255, 255);\n"
-"            }\n"
-"            QPushButton:pressed {\n"
-"                border: 2px solid darkblue;\n"
-"                background-color: gray;\n"
-"            }")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../resources/cancel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.loginButton_2.setIcon(icon1)
-        self.loginButton_2.setIconSize(QtCore.QSize(48, 48))
-        self.loginButton_2.setObjectName("loginButton_2")
-
+     
+       
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
         self.loginButton.clicked.connect(self.on_add_note_button_click)
@@ -151,7 +126,7 @@ class Ui_Form(object):
         self.textEdit.setPlaceholderText(_translate("Form", "Description ..."))
         self.lineEdit_3.setPlaceholderText(_translate("Form", "  Tags (e.g Science, CSE, Html etc)"))
         self.loginButton.setText(_translate("Form", " Add Note"))
-        self.loginButton_2.setText(_translate("Form", "Cancel"))
+     
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
